@@ -1,30 +1,31 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../../../store/actions/user';
-import { useFormik } from 'formik';
-import { UserProfileDetails } from '../../../components/validations/profileValidation';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Button } from 'primereact/button';
-import { Message } from 'primereact/message';
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../../store/actions/user";
+import { useFormik } from "formik";
+import { UserProfileDetails } from "./UserProfileSchema";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "primereact/button";
+import { Message } from "primereact/message";
 
 const ProfilePageForm = ({ onSubmit }) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.userReducer.user);
+  const currentUser = useSelector((state) => state.userReducer.user);
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: {
-        name: currentUser.username || '',
-        bio: currentUser.bio || '',
-        sex: currentUser.sexuality || '',
-        rod: currentUser.gender || '',
-        lokacija: currentUser.location || '',
-        dob: currentUser.age || '',
+        name: currentUser.username || "",
+        bio: currentUser.bio || "",
+        sex: currentUser.sexuality || "",
+        rod: currentUser.gender || "",
+        lokacija: currentUser.location || "",
+        dob: currentUser.age || "",
       },
       validationSchema: UserProfileDetails,
-      onSubmit: values => {
+      onSubmit: (values) => {
         const e = window.event;
         e.preventDefault();
+
 
         const data = {
           username: values.name,
@@ -34,7 +35,12 @@ const ProfilePageForm = ({ onSubmit }) => {
           location: values.lokacija,
           age: values.dob,
         };
+          age: values.dob,
+        };
 
+        dispatch(updateUser(data));
+        onSubmit();
+      },
         dispatch(updateUser(data));
         onSubmit();
       },

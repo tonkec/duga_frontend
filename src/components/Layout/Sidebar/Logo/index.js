@@ -1,8 +1,8 @@
-import { colors } from './generateFlag';
-import './Logo.scss';
+import { colors } from "./generateFlag";
+import "./Logo.scss";
 const Logo = () => {
   const item = colors[Math.floor(Math.random() * colors.length)];
-  const fillInColors = item.split(',').reverse();
+  const fillInColors = item.split(",").reverse();
   return (
     <div className='logo'>
       <svg
@@ -15,13 +15,13 @@ const Logo = () => {
         <defs>
           <clipPath id='a'>
             <path
-              d='m694.21-1060.1c-34.8-0.082-65.909 2.3606-91.271 4.5807-281.47 24.638-448.4 314.01-448.4 525.64-1e-3 211.62 74.676 497.55 510.43 774.19 435.76 276.64 416.72 379.42 449.57 535.9 32.845-156.48 13.811-259.27 449.57-535.9 435.76-276.64 510.43-562.56 510.43-774.19 0-211.62-166.93-501-448.4-525.64-115.94-10.149-352-24.983-511.6 218.3-124.69-190.06-296.04-222.58-420.33-222.88z'
-              color='#000000'
-              colorRendering='auto'
-              fill='#f00'
-              imageRendering='auto'
-              shapeRendering='auto'
-              style={{ isolation: 'auto', mixBlendMode: 'normal' }}
+              d="m694.21-1060.1c-34.8-0.082-65.909 2.3606-91.271 4.5807-281.47 24.638-448.4 314.01-448.4 525.64-1e-3 211.62 74.676 497.55 510.43 774.19 435.76 276.64 416.72 379.42 449.57 535.9 32.845-156.48 13.811-259.27 449.57-535.9 435.76-276.64 510.43-562.56 510.43-774.19 0-211.62-166.93-501-448.4-525.64-115.94-10.149-352-24.983-511.6 218.3-124.69-190.06-296.04-222.58-420.33-222.88z"
+              color="#000000"
+              colorRendering="auto"
+              fill="#f00"
+              imageRendering="auto"
+              shapeRendering="auto"
+              style={{ isolation: "auto", mixBlendMode: "normal" }}
             />
           </clipPath>
         </defs>

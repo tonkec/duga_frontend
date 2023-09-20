@@ -1,66 +1,60 @@
-import { useContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { forgotPassword } from '../../../store/actions/auth';
-import { useNavigate } from 'react-router-dom';
-import AuthLayout from '../../Layout/AuthLayout';
-import { EMAIL_INVALID, SOMETHING_WENT_WRONG } from '../constants';
-import FlashMessageContext from '../../../context/FlashMessage/flashMessageContext';
-import isEmailValid from '../validators/emailValidator';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import './../Auth.scss';
+import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../../store/actions/auth";
+import { useNavigate } from "react-router-dom";
+import AuthLayout from "../../Layout/AuthLayout";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import "./../Auth.scss";
+import { ForgotPasswordSchema } from "./PasswordResetSchema";
+import { useFormik } from "formik";
+import { Message } from "primereact/message";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [isDisabled, setDisabled] = useState(false);
-  const flashMessageContext = useContext(FlashMessageContext);
-  const handleValidInput = value => {
-    setEmail(value);
-    flashMessageContext.close();
-    setDisabled(false);
-  };
 
-  const handleInvalidInput = error => {
-    flashMessageContext.error(error);
-    setDisabled(true);
-  };
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: {
+        mail: "",
+      },
+      validationSchema: ForgotPasswordSchema,
+      onSubmit: (values) => {
+        const e = window.event;
+        e.preventDefault();
+        const email = values.mail;
+        try {
+          dispatch(forgotPassword(email, navigate));
+        } catch (e) {}
+      },
+    });
 
-  const onEmailChange = e => {
-    const value = e.target.value;
-    const validEmail = isEmailValid(value);
-    if (validEmail) {
-      handleValidInput(value);
-      return;
-    }
-    handleInvalidInput(EMAIL_INVALID);
-  };
-  const onHandleSubmit = e => {
-    e.preventDefault();
-    try {
-      dispatch(forgotPassword(email, navigate));
-    } catch (e) {
-      flashMessageContext.error(SOMETHING_WENT_WRONG);
-    }
-  };
   return (
     <AuthLayout>
-      <form className='form-auth'>
-        <h3 className='form-heading'>Zaboravljena lozinka</h3>
+      <form onSubmit={handleSubmit} className="form-auth">
+        <h3 className="form-heading">Zaboravljena lozinka</h3>
         <InputText
           type='email'
           placeholder='Tvoj email'
           required
-          onChange={onEmailChange}
-          data-testid='email'
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.mail}
+          data-testid="email"
+          id="mail"
         />
+        {errors.mail && touched.mail && (
+          <Message
+            severity="error"
+            text={errors.mail}
+            style={{ width: "100%" }}
+          />
+        )}
 
         <Button
-          style={{ width: '100%' }}
-          disabled={isDisabled}
-          onClick={onHandleSubmit}
-          label='Zatraži novu lozinku'
+          style={{ width: "100%" }}
+          label="Zatraži novu lozinku"
+          type="submit"
         />
       </form>
     </AuthLayout>

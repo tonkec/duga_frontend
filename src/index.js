@@ -1,23 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import store from './store';
-import { Provider } from 'react-redux';
-import FlashMessage from './components/FlashMessage';
-import FlashMessageProvider from './context/FlashMessage/flashMessageProvider';
-import { PrimeReactProvider } from 'primereact/api';
-import 'primeicons/primeicons.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import store from "./store";
+import { Provider } from "react-redux";
+import { PrimeReactProvider } from "primereact/api";
+import "primeicons/primeicons.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PrimeReactProvider>
-        <FlashMessageProvider>
-          <FlashMessage />
-          <App />
-        </FlashMessageProvider>
+        <App />
       </PrimeReactProvider>
     </Provider>
   </React.StrictMode>,

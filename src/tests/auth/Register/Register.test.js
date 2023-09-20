@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import appStore from "../../../store/index";
+import Register from "../../../components/auth/Register";
+import { MemoryRouter as Router, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "../../../router/ProtectedRoute";
+import HomePage from "../../../pages/HomePage";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
+import Login from "../../../components/auth/Login";
+=======
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '@testing-library/react';
@@ -12,6 +26,7 @@ import HomePage from '../../../pages/HomePage';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import Login from '../../../components/auth/Login';
+>>>>>>> master
 import {
   EMAIL_INVALID,
   LAST_NAME_EMPTY,
@@ -29,6 +44,17 @@ const user = {
 
 const App = () => (
   <Provider store={appStore}>
+<<<<<<< HEAD
+    <Router initialEntries={["/", "/login", "/register"]}>
+      <Routes>
+        <Route exact path="/" element={<ProtectedRoute />}>
+          <Route exact path="/" element={<HomePage />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+=======
     <FlashMessageProvider>
       <FlashMessage />
       <Router initialEntries={['/', '/login', '/register']}>
@@ -41,6 +67,7 @@ const App = () => (
         </Routes>
       </Router>
     </FlashMessageProvider>
+>>>>>>> master
   </Provider>
 );
 
@@ -59,7 +86,11 @@ test('show error message when email is not valid', async () => {
     screen.getByRole('button', {
       name: /Pridruži se/i,
     }),
+<<<<<<< HEAD
+  ).toHaveAttribute("disabled");
+=======
   ).toHaveAttribute('disabled');
+>>>>>>> master
 });
 
 test('show error message when email is empty', async () => {
@@ -72,7 +103,11 @@ test('show error message when email is empty', async () => {
     screen.getByRole('button', {
       name: /Pridruži se/i,
     }),
+<<<<<<< HEAD
+  ).toHaveAttribute("disabled");
+=======
   ).toHaveAttribute('disabled');
+>>>>>>> master
 });
 
 test('show error message when first name is not valid', async () => {
@@ -85,7 +120,11 @@ test('show error message when first name is not valid', async () => {
     screen.getByRole('button', {
       name: /Pridruži se/i,
     }),
+<<<<<<< HEAD
+  ).toHaveAttribute("disabled");
+=======
   ).toHaveAttribute('disabled');
+>>>>>>> master
 });
 
 test('show error message when last name is not valid', async () => {
@@ -98,7 +137,11 @@ test('show error message when last name is not valid', async () => {
     screen.getByRole('button', {
       name: /Pridruži se/i,
     }),
+<<<<<<< HEAD
+  ).toHaveAttribute("disabled");
+=======
   ).toHaveAttribute('disabled');
+>>>>>>> master
 });
 
 test('show error message when password is not valid', async () => {
@@ -110,7 +153,11 @@ test('show error message when password is not valid', async () => {
     screen.getByRole('button', {
       name: /Pridruži se/i,
     }),
+<<<<<<< HEAD
+  ).toHaveAttribute("disabled");
+=======
   ).toHaveAttribute('disabled');
+>>>>>>> master
 });
 
 test('should show error message when email is taken', async () => {
@@ -118,7 +165,11 @@ test('should show error message when email is taken', async () => {
     rest.post(
       `${process.env.REACT_APP_BACKEND_PORT}/register`,
       (req, res, ctx) => {
+<<<<<<< HEAD
+        return res(ctx.status(401), ctx.json({ message: "Validation error" }));
+=======
         return res(ctx.status(401), ctx.json({ message: 'Validation error' }));
+>>>>>>> master
       },
     ),
   );

@@ -1,15 +1,18 @@
-import { Button } from 'primereact/button';
-import { Tag } from 'primereact/tag';
-import { InputText } from 'primereact/inputtext';
+import { Button } from "primereact/button";
+import { Tag } from "primereact/tag";
+import { InputText } from "primereact/inputtext";
+import { Message } from "primereact/message";
+
 const ItemTemplate = ({
   file,
   options,
   onTemplateRemove,
   onDescriptionChange,
+  errObj,
 }) => {
   return (
-    <div className='flex align-items-center flex-wrap'>
-      <div className='flex align-items-center' style={{ width: '40%' }}>
+    <div className="flex align-items-center flex-wrap">
+      <div className="flex align-items-center" style={{ width: "40%" }}>
         <img
           alt={file.name}
           role='presentation'
@@ -32,6 +35,7 @@ const ItemTemplate = ({
         onChange={e => onDescriptionChange(e, file)}
         required
       />
+      {errObj.err && <Message severity="error" text={errObj.errText} />}
       <Button
         type='button'
         icon='pi pi-times'

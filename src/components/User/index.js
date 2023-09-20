@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { getUser } from '../../store/actions/user';
-import './User.scss';
-import PhotosService from '../../services/photosService';
-import PhotoGallery from '../../pages/ProfilePage/PhotoGallery';
-import FollowButton from '../FollowButton';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUser } from "../../store/actions/user";
+import "./User.scss";
 
 export const User = () => {
   const [userPhotos, setUserPhotos] = useState([]);

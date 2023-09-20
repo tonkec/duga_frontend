@@ -1,25 +1,37 @@
-import API from './api';
+import API from "./api";
 
 const ChatService = {
   fetchChats: () => {
+<<<<<<< HEAD
+    return API.get("/chats")
+      .then((res) => res.data)
+      .catch((e) => {
+=======
     return API.get('/chats')
       .then(res => res.data)
       .catch(e => {
+>>>>>>> master
         throw e;
       });
   },
   uploadImage: data => {
     const headers = {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     };
+<<<<<<< HEAD
+    return API.post("/chats/upload-image", data, headers)
+      .then((res) => res.data.url)
+      .catch((e) => {
+=======
     return API.post('/chats/upload-image', data, headers)
       .then(res => res.data.url)
       .catch(e => {
+>>>>>>> master
         throw e;
       });
   },
   paginateMessages: (id, page) => {
-    return API.get('/chats/messages', {
+    return API.get("/chats/messages", {
       params: {
         id,
         page,
@@ -30,8 +42,13 @@ const ChatService = {
         throw e;
       });
   },
+<<<<<<< HEAD
+  searchUsers: (term) => {
+    return API.get("/users/search-users", {
+=======
   searchUsers: term => {
     return API.get('/users/search-users', {
+>>>>>>> master
       params: {
         term,
       },
@@ -43,8 +60,13 @@ const ChatService = {
         throw err;
       });
   },
+<<<<<<< HEAD
+  createChat: (partnerId) => {
+    return API.post("/chats/create", { partnerId })
+=======
   createChat: partnerId => {
     return API.post('/chats/create', { partnerId })
+>>>>>>> master
       .then(({ data }) => {
         return data;
       })
@@ -53,8 +75,13 @@ const ChatService = {
       });
   },
 
+<<<<<<< HEAD
+  leaveCurrentChat: (chatId) => {
+    return API.post("/chats/leave-current-chat", { chatId })
+=======
   leaveCurrentChat: chatId => {
     return API.post('/chats/leave-current-chat', { chatId })
+>>>>>>> master
       .then(({ data }) => {
         return data;
       })
@@ -64,7 +91,7 @@ const ChatService = {
   },
 
   addFriendToGroupChat: (userId, chatId) => {
-    return API.post('/chats/add-user-to-group', { userId, chatId })
+    return API.post("/chats/add-user-to-group", { userId, chatId })
       .then(({ data }) => {
         return data;
       })

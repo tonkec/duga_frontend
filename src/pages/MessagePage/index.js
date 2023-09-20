@@ -1,9 +1,9 @@
-import Main from './../../components/Layout/Main';
-import Message from '../../components/Message';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchChats } from '../../store/actions/chat';
+import Main from "./../../components/Layout/Main";
+import Message from "../../components/Message";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchChats } from "../../store/actions/chat";
 const MessagesPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,13 +13,17 @@ const MessagesPage = () => {
   const getAllChats = useCallback(async () => {
     const allChats = await dispatch(fetchChats());
     const filteredChat = allChats.filter(
+<<<<<<< HEAD
+      (chatFromAllChats) => parseInt(id) === chatFromAllChats.id,
+=======
       chatFromAllChats => parseInt(id) === chatFromAllChats.id,
+>>>>>>> master
     );
 
     if (filteredChat.length > 0) {
       setChat(filteredChat[0]);
     } else {
-      navigate('/');
+      navigate("/");
     }
   }, [dispatch, id, navigate]);
   useEffect(() => {
