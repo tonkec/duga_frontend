@@ -13,8 +13,8 @@ export const setOnlineUsers = users => dispatch => {
 
 export const getAllUsers = () => dispatch => {
   return UserService.getAllUsers()
-    .then(res => {
-      dispatch({ type: GET_ALL_USERS, payload: res.data });
+    .then(users => {
+      dispatch({ type: GET_ALL_USERS, payload: users });
     })
     .catch(e => console.log(e));
 };

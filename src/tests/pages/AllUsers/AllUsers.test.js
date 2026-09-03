@@ -11,7 +11,7 @@ import { setupServer } from 'msw/node';
 global.setImmediate =
   global.setImmediate || ((fn, ...args) => global.setTimeout(fn, 0, ...args));
 
-const usersFromApi = [
+const usersPageOne = [
   {
     avatar: 'http://placekitten.com/200/300',
     id: 45,
@@ -50,11 +50,26 @@ const usersFromApi = [
   },
 ];
 
+const usersPageTwo = [
+  {
+    avatar: 'http://placekitten.com/200/300',
+    id: 52,
+    firstName: 'ivana',
+    lastName: 'k',
+    email: 'ivana@mail.com',
+    password: 'lozinka123',
+    gender: 'female',
+    isVerified: true,
+    createdAt: '2023-03-10T10:00:00.000Z',
+    updatedAt: '2023-03-10T10:00:00.000Z',
+  },
+];
+
 beforeAll(() => {
   appStore.dispatch({
     type: 'LOGIN',
     payload: {
-      ...usersFromApi[0],
+      ...usersPageOne[0],
       token: 'sometoken',
       isLoggedIn: true,
       isVerified: true,
@@ -80,29 +95,51 @@ it('should render the page with heading Svi Profili', async () => {
   expect(await screen.findByText('Svi profili')).toBeInTheDocument();
 });
 
-it('should get all the users', async () => {
+it('should get all the users across every page', async () => {
+  const pages = {
+    1: usersPageOne,
+    2: usersPageTwo,
+  };
   const server = setupServer(
     rest.get(
       `${process.env.REACT_APP_BACKEND_PORT}/users/get-users`,
       (req, res, ctx) => {
+        const page = req.url.searchParams.get('page');
+        const limit = req.url.searchParams.get('limit');
+        // The real backend rejects calls without page and limit.
+        if (!page || !limit) {
+          return res(
+            ctx.status(400),
+            ctx.json({
+              errors: ['page and limit query parameters are required'],
+            }),
+          );
+        }
         return res(
           ctx.set({
             Accept: 'application/json',
             Authorization: `Bearer sometoken`,
           }),
           ctx.status(200),
-          ctx.json(usersFromApi),
+          ctx.json({
+            data: pages[page] || [],
+            pagination: {
+              page: Number(page),
+              limit: Number(limit),
+              total: usersPageOne.length + usersPageTwo.length,
+              totalPages: 2,
+            },
+          }),
         );
       },
     ),
   );
   server.listen();
   render(<App />);
-  const users = await waitFor(() =>
-    screen.getAllByTestId('user').map(user => user.textContent),
-  );
   await waitFor(() => {
-    expect(users).toEqual(['antonija', 'veronika', 'petra']);
+    expect(screen.getAllByTestId('user').map(user => user.textContent)).toEqual(
+      ['antonija', 'veronika', 'petra', 'ivana'],
+    );
   });
   server.close();
 });
